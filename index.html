@@ -23,10 +23,10 @@
     --gold-soft:rgba(201,167,105,.22);
   }
   *{ box-sizing:border-box; margin:0; padding:0; }
-  html{ scroll-behavior:smooth; }
+  html{ scroll-behavior:smooth; overflow-x:hidden; width:100%; }
   body{
     background:var(--bg); color:var(--ivory); font-family:'Inter',sans-serif;
-    line-height:1.65; overflow-x:hidden; font-size:15px;
+    line-height:1.65; overflow-x:hidden; font-size:15px; width:100%; max-width:100vw;
   }
   body.loading{ overflow:hidden; height:100vh; }
   ::selection{ background:var(--gold); color:#0a0908; }
@@ -136,13 +136,18 @@
   .landing-eyebrow{
     font-family:'JetBrains Mono'; font-size:11px; letter-spacing:.32em; color:var(--gold); margin-bottom:30px;
     display:inline-flex; align-items:center; gap:12px; text-transform:uppercase; opacity:0; transition:opacity 1s ease .1s;
+    max-width:100%; flex-wrap:wrap; justify-content:center;
   }
   .landing-eyebrow.in{ opacity:1; }
-  .landing-eyebrow::before, .landing-eyebrow::after{ content:''; width:26px; height:1px; background:var(--bronze); }
-  .eyebrow-cycle{ display:inline-block; height:1.3em; overflow:hidden; vertical-align:top; position:relative; }
+  .landing-eyebrow::before, .landing-eyebrow::after{ content:''; width:26px; height:1px; background:var(--bronze); flex-shrink:0; }
+  .eyebrow-cycle{ display:inline-block; height:1.3em; overflow:hidden; vertical-align:top; position:relative; max-width:100%; }
   .eyebrow-cycle-track{ display:flex; flex-direction:column; transition:transform .8s cubic-bezier(.65,0,.35,1), filter .8s ease; }
   .eyebrow-cycle-track span{ height:1.3em; line-height:1.3; white-space:nowrap; }
   @media(prefers-reduced-motion:reduce){ .eyebrow-cycle-track{ transition:none; } }
+  @media(max-width:480px){
+    .landing-eyebrow{ letter-spacing:.16em; font-size:9.5px; gap:8px; }
+    .landing-eyebrow::before, .landing-eyebrow::after{ width:14px; }
+  }
   .landing h1{ font-family:'Fraunces'; font-size:clamp(36px,6.2vw,66px); font-weight:500; letter-spacing:-.01em; line-height:1.1; margin-bottom:24px; }
   .landing h1 em{ font-style:italic; color:var(--gold-bright); font-weight:500; }
   .char{ display:inline-block; opacity:0; transform:translateY(60%) rotate(4deg); filter:blur(9px); transition:opacity .6s ease, transform .65s cubic-bezier(.2,.8,.2,1), filter .65s ease; }
@@ -196,7 +201,7 @@
   .sec-line{ flex:1; height:1px; background:var(--line-soft); margin-bottom:12px; }
 
   /* GALLERY */
-  .gallery{ padding:88px 0 50px; border-top:1px solid var(--line-soft); }
+  .gallery{ padding:88px 0 50px; border-top:1px solid var(--line-soft); overflow-x:hidden; }
   .gallery-topbar{ display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
   .gallery-counter{ font-family:'JetBrains Mono'; font-size:11.5px; letter-spacing:.14em; color:var(--dim2); }
   .gallery-counter b{ color:var(--gold); font-weight:600; }
@@ -258,7 +263,7 @@
   }
   .arrow:hover{ border-color:var(--gold); color:var(--gold-bright); background:var(--panel); }
   .arrow:disabled{ opacity:.2; cursor:default; }
-  .stage-row{ display:flex; align-items:center; gap:20px; }
+  .stage-row{ display:flex; align-items:center; gap:20px; overflow:hidden; }
   @media(max-width:560px){
     .stage-row{ gap:8px; }
     .arrow{ width:36px; height:36px; font-size:14px; }
@@ -616,8 +621,8 @@
     <div class="contact-row">
       <a class="btn btn-primary magnetic email-btn" href="mailto:nimrafatima745@gmail.com">nimrafatima745@gmail.com</a>
       <a class="btn btn-ghost magnetic" href="tel:+923260639122">+92 326-0639122</a>
-      <a class="btn btn-ghost magnetic" href="https://www.linkedin.com/in/nimra-fatima-b67760333">LinkedIn</a>
-      <a class="btn btn-ghost magnetic" href="https://github.com/Nimra71">GitHub</a>
+      <a class="btn btn-ghost magnetic" href="https://www.linkedin.com/in/nimra-fatima-b67760333" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn btn-ghost magnetic" href="https://github.com/Nimra71" target="_blank" rel="noopener">GitHub</a>
     </div>
     <div class="foot-meta">VEHARI, PUNJAB, PAKISTAN — © 2026 NIMRA FATIMA</div>
   </div>
@@ -1016,14 +1021,14 @@ const projects = [
     tags:["YOLOv8m","SlowFast R50","FER+ CNN","ByteTrack"]
   },
   {
-    title:"Document Analyst",
-    sub:"Intelligent Document Analysis System (RAG)",
+    title:"Document RAG System",
+    sub:"Production RAG Pipeline for PDF Q&A",
     date:"Independent Project",
     category:"Retrieval-Augmented Generation",
-    skills:"RAG, FAISS",
+    skills:"RAG, FAISS, Cross-Encoder Reranking",
     icon: icon.doc,
-    desc:"Built a PDF question-answering system using RAG, 4-bit quantized LLMs, FAISS semantic search, and a Gradio interface — enabling real-time document insights at reduced compute cost.",
-    tags:["RAG","FAISS","Quantized LLMs","Gradio"]
+    desc:"Built a RAG-based document Q&A system enabling users to upload a PDF and receive grounded, source-cited answers instead of generic LLM responses. Solved a key retrieval-accuracy challenge by adding a cross-encoder reranking stage on top of FAISS vector search, improving answer precision over single-stage retrieval. Optimized for lightweight, cost-free deployment by replacing PyTorch-based embeddings with ONNX-based models, containerizing with Docker, and shipping it live on production infrastructure.",
+    tags:["RAG","FAISS","Cross-Encoder Reranking","ONNX","Docker"]
   },
   {
     title:"Object Detection",
